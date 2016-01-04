@@ -1,0 +1,20 @@
+{
+  "name": "text-meme",
+  "version": "1.0.0",
+  "description": "A polymer element that generate text memes",
+  "main": "text-meme.html",
+  "authors": [
+    "Chintan Radia <radiachints1512@gmail.com>"
+  ],
+  "keywords": [
+    "memes",
+    "text-memes",
+    "polymer",
+    "quotes",
+    "gif"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0",
+    "randomcolor": "~0.4.2"
+  }
+}

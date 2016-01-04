@@ -1,0 +1,160 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="bower_components/polymer/polymer.html">
+<script type="text/javascript" src="bower_components/randomcolor/randomColor.js"></script>
+<script type="text/javascript" src="lib/LZWEncoder.js"></script>
+<script type="text/javascript" src="lib/NeuQuant.js"></script>
+<script type="text/javascript" src="lib/GIFEncoder.js"></script>
+
+
+<!--
+`<text-meme>` is an element which can generate gif image of text memes
+
+Example:
+
+    <text-meme text="Don't forget to be awesome."></text-meme>
+
+@demo index.html
+-->
+
+<dom-module id="text-meme">
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+    }
+  </style>
+  <template>
+    <img id="img" src=""/>
+  </template>
+  <script>
+    Polymer({
+
+      is: 'text-meme',
+
+      properties: {
+        
+        /**
+         * Text for which text-meme to be generated
+         */
+        text: {
+          type: String,
+          value: "Dont't forget to be awesome"
+        },
+
+        /**
+         * Background color in hex
+         */
+        background: {
+          type: String,
+          value: randomColor({luminosity: 'dark'})
+        },
+
+        /**
+         * Frame delay
+         */
+        delay: {
+          type: Number,
+          value: 400,
+        },
+
+        /**
+         * Width of the image
+         */
+        width: {
+          type: Number,
+          value: 400
+        },
+
+        /**
+         * Height of the image
+         */
+        height: {
+          type: Number,
+          value: 400
+        },
+
+        /**
+         * Text color in hex
+         */
+        fontcolor: {
+          type: String,
+          value: "#FFFFFF"
+        },
+
+        /**
+         * Text size
+         */
+        fontsize: {
+          type: Number,
+          value: 30
+        },
+
+        /**
+         * Font face of the text
+         */ 
+        font: {
+          type: String,
+          value: 'Arial'
+        }
+
+      },
+
+      ready: function() {
+        var _this = this;
+        _this.canvas = _this.createCanvas();
+        _this.ctx = _this.canvas.getContext('2d');
+        _this.encoder = _this.createGIFEncoder(); // initiate GIFEncoder.
+        _this.encoder.start(); // start encoder after this we can start adding frames to it.
+        
+        _this.text.split(" ").forEach(function(word) {
+          _this.drawBackground(_this.ctx);
+          _this.drawText(_this.ctx, word);
+          _this.encoder.addFrame(_this.ctx);
+        });
+
+        _this.encoder.finish();
+        var binary_gif = _this.encoder.stream().getData();
+        var data_url = 'data:image/gif;base64,';
+        var basecode = btoa(binary_gif);
+        _this.$.img.setAttribute("src","data:image/gif;base64,"+basecode);
+      },
+
+      drawBackground: function(ctx) {
+        ctx.fillStyle = this.background;
+        ctx.fillRect(0,0,this.width, this.height);
+      },
+
+      drawText: function(ctx, word) {
+        ctx.textAlign = 'center';
+	      ctx.textBaseline = 'middle';
+	      ctx.fillStyle = this.fontcolor;
+        ctx.font = this.fontsize + 'px ' + this.font;
+        ctx.fillText(word, this.width/2, this.width/2);
+      },
+
+      createCanvas: function() {
+        var canvas = document.createElement('canvas');
+        canvas.width = this.width;
+        canvas.height = this.height;
+        return canvas;
+      },
+
+      createGIFEncoder: function() {
+        var encoder = new GIFEncoder();
+        encoder.setRepeat(0); //0  -> loop forever, //1+ loops n times
+        encoder.setDelay(this.delay);
+        return encoder;
+      }
+
+    });
+  </script>
+</dom-module>
