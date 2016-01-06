@@ -15,13 +15,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta content='text/html; charset=utf-8' http-equiv='content-type' />
     <title>Text Meme</title>
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="text-meme.html">
+    <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css' />
+    <link rel="import" href="bower_components/text-meme/text-meme.html">
   </head>
   <body>
-
-    <p>An example of <code>&lt;text-meme&gt;</code>:</p>
-
-    <text-meme delay="500" text="Make today ridiculously amazing."></text-meme>
-
+    <div class="container">
+      <section>
+        <h1 class="sliding-u-l-r-l">Text Meme</h1>
+        <p>A polymer element which you can use in your webpage to generate text meme GIFs.</p>
+      </section>
+      <section>
+        <text-meme delay="500" text="Make today ridiculously amazing." height="350" width="350"></text-meme>
+      </section>
+      
+      <div class="footer">
+        Created by <a href="https://twitter.com/chintsradia">Chintan Radia.</a> Find the source code on <a href="https://github.com/beatfreaker/text-memes">GITHUB</a>
+      </div>
+    </div>
+    
   </body>
+  <style>
+    body {
+      font-family: 'Chivo', sans-serif;
+      background: #2E2E2E;
+      color: #fff;
+      font-size: 16px;
+      overflow: hidden;
+    }
+    h1 {
+      color: #E01803;
+      display: inline-block;
+    }
+    .container {
+      margin: 0 auto;
+      padding: 50px;
+      text-align: center;
+      max-width: 600px;
+    }
+    a:link, a:visited {
+      color: #fff875;
+      text-decoration: none;
+    }
+    a:hover {
+      border-bottom: 1px solid;
+    }
+    .footer {
+      margin-top: 50px;
+      border-top: 2px solid #E01803;
+      padding-top: 30px;
+      font-size: 12px;
+      letter-spacing: .1em;
+       
+    }
+    text-meme {
+      border: 2px dashed #bfbfb5;
+      padding: 15px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+  </style>
 </html>
