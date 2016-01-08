@@ -74,24 +74,4 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: inline-block;
     }
   </style>
-  <script type="text/javascript">
-    
-
-
-
-console.log('hi');
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (xhttp.readyState == 4 && xhttp.status == 200) {
-    console.log('gotit');
-      document.getElementById("demo").innerHTML = xhttp.responseText;
-    }
-  };
-  xhttp.open("GET", "https://api.thesubdb.com/?action=download&hash=ddasd&language=en", true);
-xhttp.setRequestHeader('user-agent', 'SubDB/1.0');
-  xhttp.send();
-
-
-
-  </script>
 </html>
